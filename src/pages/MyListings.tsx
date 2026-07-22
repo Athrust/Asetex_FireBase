@@ -92,7 +92,7 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
           className="btn-primary py-3 px-6 gap-2 text-sm shadow-md shadow-brand-600/20 whitespace-nowrap"
         >
           <Plus className="w-4 h-4 stroke-[3]" />
-          + Add New Tool
+          Add New Tool
         </button>
       </div>
 
