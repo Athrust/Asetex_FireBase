@@ -42,7 +42,7 @@ const listingSchema = new mongoose.Schema({
   reviewCount: { type: Number, default: 0 },
   reviews: [reviewSchema],
   featured: { type: Boolean, default: false },
-  usageLocationType: { type: String, enum: ['off-site', 'on-site'], default: 'off-site' }
+  usageLocationType: { type: String, enum: ['off-site', 'on-site', 'both'], default: 'both' }
 }, {
   timestamps: true
 });
