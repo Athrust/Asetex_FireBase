@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { getCategoryIcon } from '../components/ToolCard';
 import { 
@@ -9,7 +9,10 @@ import {
   Eye, 
   EyeOff, 
   MapPin, 
-  CheckCircle2
+  CheckCircle2,
+  Edit3,
+  X,
+  IndianRupee
 } from 'lucide-react';
 
 interface MyListingsProps {
@@ -18,7 +21,37 @@ interface MyListingsProps {
 }
 
 export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool }) => {
-  const { user, listings, bookings, toggleListingStatus, deleteListing } = useApp();
+  const { user, listings, bookings, toggleListingStatus, deleteListing, updateListing } = useApp();
+
+  const [editingPricingId, setEditingPricingId] = useState<string | null>(null);
+  const [editDailyRate, setEditDailyRate] = useState<string>('');
+  const [editHourlyRate, setEditHourlyRate] = useState<string>('');
+  const [editDeposit, setEditDeposit] = useState<string>('');
+  const [isUpdatingPricing, setIsUpdatingPricing] = useState(false);
+
+  const openPricingModal = (tool: any) => {
+    setEditingPricingId(tool.id);
+    setEditDailyRate(tool.dailyRate.toString());
+    setEditHourlyRate(tool.hourlyRate ? tool.hourlyRate.toString() : '');
+    setEditDeposit(tool.deposit ? tool.deposit.toString() : '');
+  };
+
+  const handlePricingSubmit = async () => {
+    if (!editingPricingId || !editDailyRate) return;
+    setIsUpdatingPricing(true);
+    try {
+      await updateListing(editingPricingId, {
+        dailyRate: Number(editDailyRate),
+        hourlyRate: editHourlyRate ? Number(editHourlyRate) : undefined,
+        deposit: editDeposit ? Number(editDeposit) : undefined
+      });
+      setEditingPricingId(null);
+    } catch (err) {
+      console.error('Failed to update pricing', err);
+    } finally {
+      setIsUpdatingPricing(false);
+    }
+  };
 
   if (!user) {
     return (
@@ -170,12 +203,20 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
 
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={() => openPricingModal(tool)}
+                    className="p-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1"
+                    title="Edit Pricing"
+                  >
+                    <Edit3 className="w-3.5 h-3.5" />
+                    Edit Price
+                  </button>
+
+                  <button
                     onClick={() => onSelectTool(tool.id)}
                     className="p-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1"
                     title="View detail page"
                   >
                     <Eye className="w-3.5 h-3.5" />
-                    View
                   </button>
 
                   <button
@@ -210,6 +251,72 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
           >
             + Add Your First Tool Listing
           </button>
+          </button>
+        </div>
+      )}
+
+      {/* Edit Pricing Modal */}
+      {editingPricingId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-6 border-b border-slate-100">
+              <h3 className="text-xl font-bold text-navy-900 flex items-center gap-2">
+                <IndianRupee className="w-5 h-5 text-brand-600" />
+                Edit Pricing
+              </h3>
+              <button 
+                onClick={() => setEditingPricingId(null)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-6 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-sm font-bold text-navy-900 block">Daily Rate (₹) *</label>
+                <input 
+                  type="number"
+                  value={editDailyRate}
+                  onChange={(e) => setEditDailyRate(e.target.value)}
+                  className="input-field"
+                  placeholder="e.g. 500"
+                  min="0"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-bold text-navy-900 block">Hourly Rate (₹) <span className="text-slate-400 font-normal">(Optional)</span></label>
+                <input 
+                  type="number"
+                  value={editHourlyRate}
+                  onChange={(e) => setEditHourlyRate(e.target.value)}
+                  className="input-field"
+                  placeholder="e.g. 100"
+                  min="0"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-sm font-bold text-navy-900 block">Security Deposit (₹) <span className="text-slate-400 font-normal">(Optional)</span></label>
+                <input 
+                  type="number"
+                  value={editDeposit}
+                  onChange={(e) => setEditDeposit(e.target.value)}
+                  className="input-field"
+                  placeholder="e.g. 2000"
+                  min="0"
+                />
+              </div>
+              
+              <div className="pt-2">
+                <button 
+                  onClick={handlePricingSubmit}
+                  disabled={!editDailyRate || isUpdatingPricing}
+                  className="btn-primary w-full py-3.5"
+                >
+                  {isUpdatingPricing ? 'Saving...' : 'Save Pricing Changes'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
