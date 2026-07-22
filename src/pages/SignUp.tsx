@@ -60,12 +60,12 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-3.5 mb-3">
           <img src="/logo.png?v=assetex_v7" alt="ASSETEX Logo" className="h-16 w-auto object-contain drop-shadow" />
-          <span className="font-outfit text-3xl font-black tracking-tight text-slate-900">
+          <span className="font-outfit text-3xl font-black tracking-tight text-white">
             ASSETEX
           </span>
         </div>
-        <h1 className="text-3xl font-black text-slate-900">Create your account</h1>
-        <p className="text-sm text-slate-600">
+        <h1 className="text-3xl font-black text-white">Create your account</h1>
+        <p className="text-sm text-slate-400">
           One account lets you both borrow tools nearby and list your own to earn.
         </p>
       </div>
@@ -77,7 +77,7 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl border border-slate-200 border-b-2 border-b-slate-300 shadow-elevated space-y-4">
+      <form onSubmit={handleSubmit} className="bg-matte-900 p-8 rounded-3xl border border-matte-800 border-b-2 border-b-matte-700 shadow-elevated space-y-4">
         
         <div className="flex justify-center w-full">
           <GoogleLogin
@@ -102,80 +102,80 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
 
         <div className="relative pt-2 pb-1">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200"></div>
+            <div className="w-full border-t border-matte-800"></div>
           </div>
           <div className="relative flex justify-center text-xs">
-            <span className="bg-white px-2 text-slate-500 font-medium uppercase tracking-wider">Or sign up with email</span>
+            <span className="bg-matte-900 px-2 text-slate-500 font-medium uppercase tracking-wider">Or sign up with email</span>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
-            <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">First Name <span className="text-rose-500">*</span></label>
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">First Name <span className="text-rose-500">*</span></label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input 
                 type="text"
                 required
-                placeholder="First name"
+
                 value={firstName}
                 onChange={(e) => { setFirstName(e.target.value); setError(''); }}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
               />
             </div>
           </div>
           <div className="space-y-1">
-            <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">Last Name</label>
+            <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Last Name</label>
             <div className="relative">
               <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input 
                 type="text"
-                placeholder="Last name"
+
                 value={lastName}
                 onChange={(e) => { setLastName(e.target.value); setError(''); }}
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
               />
             </div>
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">Email Address <span className="text-rose-500">*</span></label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Email Address <span className="text-rose-500">*</span></label>
           <div className="relative">
             <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input 
               type="email"
               required
-              placeholder="you@example.com"
+
               value={email}
               onChange={(e) => { setEmail(e.target.value); setError(''); }}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">Phone Number</label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Phone Number</label>
           <div className="relative">
             <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input 
               type="tel"
-              placeholder="+91 98765 43210"
+
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">City / Neighborhood</label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">City / Neighborhood</label>
           <div className="relative">
             <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <select
               value={city}
               onChange={(e) => setCity(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none cursor-pointer"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none cursor-pointer"
             >
               <option value="Mumbai">Mumbai</option>
               <option value="Pune">Pune</option>
@@ -190,22 +190,22 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">Create Password <span className="text-rose-500">*</span></label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Create Password <span className="text-rose-500">*</span></label>
           <div className="relative">
             <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input 
               type={showPassword ? 'text' : 'password'}
               required
               minLength={6}
-              placeholder="Minimum 6 characters"
+
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(''); }}
-              className="w-full pl-10 pr-12 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-navy-900 focus:bg-white focus:border-brand-500 focus:outline-none"
+              className="w-full pl-10 pr-12 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
             />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
@@ -216,20 +216,20 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-bold text-navy-800 uppercase tracking-wider block">Confirm Password <span className="text-rose-500">*</span></label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Confirm Password <span className="text-rose-500">*</span></label>
           <div className="relative">
             <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input 
               type="password"
               required
               minLength={6}
-              placeholder="Re-enter your password"
+
               value={confirmPassword}
               onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
-              className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-50 border text-sm font-medium text-navy-900 focus:bg-white focus:outline-none ${
+              className={`w-full pl-10 pr-4 py-2.5 rounded-xl bg-matte-800 border text-sm font-medium text-white focus:bg-matte-900 focus:outline-none ${
                 confirmPassword && confirmPassword !== password
-                  ? 'border-rose-300 focus:border-rose-500'
-                  : 'border-slate-200 focus:border-brand-500'
+                  ? 'border-rose-500/50 focus:border-rose-500'
+                  : 'border-matte-700 focus:border-brand-500'
               }`}
             />
           </div>
@@ -238,9 +238,9 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
           )}
         </div>
 
-        <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1">
-          <div className="flex items-center gap-1.5 font-semibold text-navy-800">
-            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+        <div className="bg-matte-800 p-3 rounded-xl border border-matte-700 text-xs text-slate-400 space-y-1">
+          <div className="flex items-center gap-1.5 font-semibold text-slate-200">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
             No separate account types needed
           </div>
           <p className="text-[11px] pl-5">You can immediately browse and rent tools, or list your own anytime.</p>
@@ -254,13 +254,13 @@ export const SignUp: React.FC<SignUpProps> = ({ onNavigate }) => {
           {loading ? 'Creating Account...' : 'Create Account & Start Sharing →'}
         </button>
 
-        <div className="text-center pt-2 border-t border-slate-100">
-          <p className="text-xs text-slate-600">
+        <div className="text-center pt-2 border-t border-matte-800">
+          <p className="text-xs text-slate-400">
             Already have an account?{' '}
             <button
               type="button"
               onClick={() => onNavigate('login')}
-              className="font-bold text-blue-600 hover:text-blue-700 underline ml-1"
+              className="font-bold text-brand-500 hover:text-brand-400 underline ml-1"
             >
               Log In
             </button>

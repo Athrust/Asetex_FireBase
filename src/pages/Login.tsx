@@ -36,12 +36,12 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
       <div className="text-center space-y-2">
         <div className="flex items-center justify-center gap-3.5 mb-3">
           <img src="/logo.png?v=assetex_v7" alt="ASSETEX Logo" className="h-16 w-auto object-contain drop-shadow" />
-          <span className="font-outfit text-3xl font-black tracking-tight text-slate-900">
+          <span className="font-outfit text-3xl font-black tracking-tight text-white">
             ASSETEX
           </span>
         </div>
-        <h1 className="text-3xl font-black text-slate-900">Welcome back to Assetex</h1>
-        <p className="text-sm text-slate-600">
+        <h1 className="text-3xl font-black text-white">Welcome back to Assetex</h1>
+        <p className="text-sm text-slate-400">
           Log in to your account to manage rentals and listings.
         </p>
       </div>
@@ -53,7 +53,7 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-3xl border border-slate-200 border-b-2 border-b-slate-300 shadow-elevated space-y-5">
+      <form onSubmit={handleSubmit} className="bg-matte-900 p-8 rounded-3xl border border-matte-800 border-b-2 border-b-matte-700 shadow-elevated space-y-5">
         
         <div className="flex justify-center w-full">
           <GoogleLogin
@@ -78,39 +78,39 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200"></div>
+            <div className="w-full border-t border-matte-800"></div>
           </div>
           <div className="relative flex justify-center text-xs">
-            <span className="bg-white px-2 text-slate-500 font-medium uppercase tracking-wider">Or continue with email</span>
+            <span className="bg-matte-900 px-2 text-slate-500 font-medium uppercase tracking-wider">Or continue with email</span>
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-slate-900 uppercase tracking-wider block">Email Address</label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Email Address</label>
           <div className="relative">
             <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="email"
               required
-              placeholder="you@example.com"
+
               value={email}
               onChange={(e) => { setEmail(e.target.value); setError(''); }}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 focus:bg-white focus:border-blue-600 focus:outline-none transition-all shadow-sm"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none transition-all shadow-sm"
             />
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-bold text-slate-900 uppercase tracking-wider block">Password</label>
+          <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">Password</label>
           <div className="relative">
             <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="password"
               required
-              placeholder="Enter your password"
+
               value={password}
               onChange={(e) => { setPassword(e.target.value); setError(''); }}
-              className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 focus:bg-white focus:border-blue-600 focus:outline-none transition-all shadow-sm"
+              className="w-full pl-10 pr-4 py-3 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none transition-all shadow-sm"
             />
           </div>
         </div>
@@ -118,18 +118,18 @@ export const Login: React.FC<LoginProps> = ({ onNavigate }) => {
         <button
           type="submit"
           disabled={loading}
-          className="btn-primary w-full py-3.5 text-base bg-slate-800 hover:bg-slate-900 text-white font-bold shadow-sm border border-slate-700 disabled:opacity-60 disabled:cursor-not-allowed"
+          className="btn-primary w-full py-3.5 text-base shadow-sm disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {loading ? 'Logging in...' : 'Log In'}
         </button>
 
-        <div className="text-center pt-2 border-t border-slate-100">
-          <p className="text-xs text-slate-600">
+        <div className="text-center pt-2 border-t border-matte-800">
+          <p className="text-xs text-slate-400">
             Don't have an account yet?{' '}
             <button
               type="button"
               onClick={() => onNavigate('signup')}
-              className="font-bold text-blue-600 hover:text-blue-700 underline ml-1"
+              className="font-bold text-brand-500 hover:text-brand-400 underline ml-1"
             >
               Sign Up Free
             </button>

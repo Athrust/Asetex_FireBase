@@ -16,6 +16,7 @@ import { MyBookings } from './pages/MyBookings';
 import { BookingRequests } from './pages/BookingRequests';
 import { Profile } from './pages/Profile';
 import { AssetCash } from './pages/AssetCash';
+import { Background3D } from './components/Background3D';
 
 const MainContent: React.FC = () => {
   const { user, isLoading, error, retryConnection } = useApp();
@@ -73,7 +74,8 @@ const MainContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-slate-900">
+    <div className="min-h-screen flex flex-col bg-transparent">
+      <Background3D />
       <Navbar
         activePage={activePage}
         setActivePage={handleNavigate}
@@ -145,8 +147,8 @@ const MainContent: React.FC = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-navy-950 text-slate-300 border-t border-navy-900 pt-16 pb-12 mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-navy-800">
+      <footer className="bg-matte-950 text-slate-300 border-t border-matte-900 pt-16 pb-12 mt-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-matte-800">
           <div className="space-y-4 md:col-span-1">
             <div className="flex items-center gap-3">
               <img src="/logo.png?v=assetex_v7" alt="Assetex Logo" className="h-14 w-auto object-contain drop-shadow-md" />

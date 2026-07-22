@@ -126,7 +126,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                     <Search className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
-                      placeholder="e.g. Prusa 3D Printer, Chainsaw, Tile Cutter..."
+
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       className="w-full pl-11 pr-4 py-3.5 rounded-md bg-slate-50 border border-slate-200 text-sm font-semibold text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:outline-none transition-all shadow-sm"

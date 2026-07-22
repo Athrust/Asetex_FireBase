@@ -115,14 +115,14 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
   }, [filterState]);
 
   const FilterSidebarContent = () => (
-    <div className="flex flex-col h-full min-h-0 bg-white text-slate-800">
+    <div className="flex flex-col h-full min-h-0 bg-matte-900 text-slate-200">
       {/* Sidebar Header */}
-      <div className="p-4 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between shrink-0">
+      <div className="p-4 bg-matte-950/80 border-b border-matte-800/80 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-4 h-4 text-brand-600" />
-          <span className="font-extrabold text-navy-900 text-sm tracking-tight">Filters & Sorting</span>
+          <SlidersHorizontal className="w-4 h-4 text-brand-500" />
+          <span className="font-extrabold text-white text-sm tracking-tight">Filters & Sorting</span>
           {activeFilterCount > 0 && (
-            <span className="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] font-extrabold flex items-center justify-center">
+            <span className="w-5 h-5 rounded-full bg-brand-500 text-white text-[10px] font-extrabold flex items-center justify-center">
               {activeFilterCount}
             </span>
           )}
@@ -147,7 +147,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
             onClick={() => toggleSection('sort')}
             className="w-full flex items-center justify-between py-1 text-xs font-extrabold text-slate-400 uppercase tracking-wider group"
           >
-            <span className="flex items-center gap-1.5 text-navy-900 font-bold text-xs group-hover:text-brand-600">
+            <span className="flex items-center gap-1.5 text-slate-100 font-bold text-xs group-hover:text-brand-500">
               <ArrowUpDown className="w-3.5 h-3.5 text-brand-500" />
               Sort By
             </span>
@@ -164,13 +164,13 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
                     onClick={() => setFilterState({ sortBy: opt.id })}
                     className={`flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer text-xs font-semibold transition-all ${
                       isSelected
-                        ? 'bg-brand-50/80 text-brand-700 font-bold border border-brand-200/80 shadow-2xs'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-navy-900 border border-transparent'
+                        ? 'bg-brand-950/30 text-brand-500 font-bold border border-brand-900/50 shadow-2xs'
+                        : 'text-slate-400 hover:bg-matte-800 hover:text-white border border-transparent'
                     }`}
                   >
                     <span>{opt.label}</span>
                     <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${
-                      isSelected ? 'border-brand-600 bg-brand-600' : 'border-slate-300 bg-white'
+                      isSelected ? 'border-brand-500 bg-brand-500' : 'border-matte-600 bg-matte-800'
                     }`}>
                       {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                     </div>
@@ -188,7 +188,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
             onClick={() => toggleSection('category')}
             className="w-full flex items-center justify-between py-1 text-xs font-extrabold text-slate-400 uppercase tracking-wider group"
           >
-            <span className="flex items-center gap-1.5 text-navy-900 font-bold text-xs group-hover:text-brand-600">
+            <span className="flex items-center gap-1.5 text-white font-bold text-xs group-hover:text-brand-500">
               <Tag className="w-3.5 h-3.5 text-brand-500" />
               Category
             </span>
@@ -206,12 +206,12 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
                     onClick={() => setFilterState({ category: cat })}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs transition-all ${
                       isSelected
-                        ? 'bg-navy-900 text-white font-bold shadow-2xs'
-                        : 'text-slate-600 hover:bg-slate-50 font-medium hover:text-navy-900'
+                        ? 'bg-brand-500 text-white font-bold shadow-2xs'
+                        : 'text-slate-400 hover:bg-matte-800 font-medium hover:text-white'
                     }`}
                   >
                     <span className="truncate pr-2">{cat}</span>
-                    {isSelected && <Check className="w-3.5 h-3.5 text-amber-400 shrink-0" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 text-white shrink-0" />}
                   </button>
                 );
               })}
@@ -226,7 +226,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
             onClick={() => toggleSection('price')}
             className="w-full flex items-center justify-between py-1 text-xs font-extrabold text-slate-400 uppercase tracking-wider group"
           >
-            <span className="flex items-center gap-1.5 text-navy-900 font-bold text-xs group-hover:text-brand-600">
+            <span className="flex items-center gap-1.5 text-white font-bold text-xs group-hover:text-brand-500">
               <IndianRupee className="w-3.5 h-3.5 text-brand-500" />
               Max Daily Rate
             </span>
@@ -236,8 +236,8 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
           {openSections.price && (
             <div className="mt-3 space-y-4 px-1">
               <div className="flex items-center justify-between text-xs font-bold">
-                <span className="text-slate-500">Up to:</span>
-                <span className="text-sm font-extrabold text-navy-900 bg-amber-50 text-amber-700 px-2.5 py-1 rounded-lg border border-amber-200">
+                <span className="text-slate-400">Up to:</span>
+                <span className="text-sm font-extrabold text-white bg-amber-950/30 text-amber-500 px-2.5 py-1 rounded-lg border border-amber-900/50">
                   {filterState.maxPrice === Infinity ? 'Max' : `₹${filterState.maxPrice} / day`}
                 </span>
               </div>
@@ -252,7 +252,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
                   const val = Number(e.target.value);
                   setFilterState({ maxPrice: val >= 10000 ? Infinity : val });
                 }}
-                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600"
+                className="w-full h-2 bg-matte-800 rounded-lg appearance-none cursor-pointer accent-brand-500"
               />
 
               <div className="flex justify-between text-[10px] text-slate-400 font-bold">
@@ -271,7 +271,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
             onClick={() => toggleSection('location')}
             className="w-full flex items-center justify-between py-1 text-xs font-extrabold text-slate-400 uppercase tracking-wider group"
           >
-            <span className="flex items-center gap-1.5 text-navy-900 font-bold text-xs group-hover:text-brand-600">
+            <span className="flex items-center gap-1.5 text-white font-bold text-xs group-hover:text-brand-500">
               <MapPin className="w-3.5 h-3.5 text-brand-500" />
               Location
             </span>
@@ -294,12 +294,12 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
                     }}
                     className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs transition-all ${
                       isSelected
-                        ? 'bg-blue-50 text-brand-700 font-bold border border-blue-200/80 shadow-2xs'
-                        : 'text-slate-600 hover:bg-slate-50 font-medium hover:text-navy-900 border border-transparent'
+                        ? 'bg-brand-950/30 text-brand-500 font-bold border border-brand-900/50 shadow-2xs'
+                        : 'text-slate-400 hover:bg-matte-800 font-medium hover:text-white border border-transparent'
                     }`}
                   >
                     <span className="truncate pr-2">{loc}</span>
-                    {isSelected && <Check className="w-3.5 h-3.5 text-brand-600 shrink-0" />}
+                    {isSelected && <Check className="w-3.5 h-3.5 text-brand-500 shrink-0" />}
                   </button>
                 );
               })}
@@ -315,34 +315,34 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
     <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       
       {/* Top Bar spanning full width above grid (Desktop) */}
-      <div className="hidden lg:flex items-center justify-between bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 mb-6">
+      <div className="hidden lg:flex items-center justify-between bg-matte-900/80 p-4 rounded-2xl border border-matte-800/80 mb-6">
         <div className="flex items-center gap-3">
-          <span className="text-sm font-extrabold text-navy-900">
+          <span className="text-sm font-extrabold text-white">
             Showing {filteredListings.length} {filteredListings.length === 1 ? 'listing' : 'listings'}
           </span>
           {filterState.searchQuery && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-brand-700 text-xs font-bold">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-brand-950/30 border border-brand-900 text-brand-500 text-xs font-bold">
               "{filterState.searchQuery}"
               <X 
-                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-600" 
+                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-500" 
                 onClick={() => setFilterState({ searchQuery: '' })} 
               />
             </span>
           )}
           {filterState.category && filterState.category !== 'All Categories' && (
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-200 text-slate-800 text-xs font-bold">
+            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-matte-800 text-slate-200 text-xs font-bold">
               {filterState.category}
               <X 
-                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-600" 
+                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-500" 
                 onClick={() => setFilterState({ category: 'All Categories' })} 
               />
             </span>
           )}
           {filterState.locations?.map((loc) => (
-            <span key={loc} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-bold">
+            <span key={loc} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-950/30 border border-amber-900/50 text-amber-500 text-xs font-bold">
               {loc}
               <X 
-                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-600" 
+                className="w-3.5 h-3.5 cursor-pointer hover:text-rose-500" 
                 onClick={() => setFilterState({ 
                   locations: filterState.locations?.filter(l => l !== loc) || []
                 })} 
@@ -351,17 +351,17 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
           ))}
         </div>
 
-        <div className="text-xs text-slate-500 font-medium">
-          Sorted by: <strong className="text-navy-900 font-bold">{SORT_OPTIONS.find(o => o.id === filterState.sortBy)?.label || 'Highest Rated'}</strong>
+        <div className="text-xs text-slate-400 font-medium">
+          Sorted by: <strong className="text-white font-bold">{SORT_OPTIONS.find(o => o.id === filterState.sortBy)?.label || 'Highest Rated'}</strong>
         </div>
       </div>
 
       {/* Mobile Header Bar & Search / Filter Button */}
       <div className="lg:hidden mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
-        <div className="flex items-center justify-between bg-white p-3.5 rounded-2xl border border-slate-200/80 shadow-2xs">
+        <div className="flex items-center justify-between bg-matte-900 p-3.5 rounded-2xl border border-matte-800 shadow-2xs">
           <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-brand-600" />
-            <span className="text-xs font-extrabold text-navy-900">
+            <SlidersHorizontal className="w-4 h-4 text-brand-500" />
+            <span className="text-xs font-extrabold text-white">
               {filteredListings.length} {filteredListings.length === 1 ? 'tool available' : 'tools available'}
             </span>
           </div>
@@ -369,11 +369,11 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
           <button
             onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
             type="button"
-            className="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
+            className="px-3 py-1.5 rounded-xl bg-matte-950 border border-matte-800 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm"
           >
             <span>Filter & Sort</span>
             {activeFilterCount > 0 && (
-              <span className="px-1.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-extrabold">
+              <span className="px-1.5 py-0.5 rounded-full bg-brand-500 text-white text-[10px] font-extrabold">
                 {activeFilterCount}
               </span>
             )}
@@ -383,9 +383,9 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
 
         {/* Mobile Collapsible Filter Drawer */}
         {isMobileFilterOpen && (
-          <div className="lg:hidden bg-white rounded-3xl border border-slate-200 shadow-elevated overflow-hidden max-h-[70vh] flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="lg:hidden bg-matte-900 rounded-3xl border border-matte-800 shadow-elevated overflow-hidden max-h-[70vh] flex flex-col animate-in fade-in slide-in-from-top-2 duration-200">
             <FilterSidebarContent />
-            <div className="p-3 bg-slate-50 border-t border-slate-200 flex justify-end">
+            <div className="p-3 bg-matte-950 border-t border-matte-800 flex justify-end">
               <button
                 onClick={() => setIsMobileFilterOpen(false)}
                 type="button"
@@ -403,7 +403,7 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
         
         {/* DESKTOP SIDEBAR docked to left side */}
         <aside className="hidden lg:block w-64 xl:w-72 shrink-0 sticky top-24 self-start z-30">
-          <div className="bg-white border border-slate-200/80 rounded-3xl shadow-soft overflow-hidden flex flex-col h-[calc(100vh-6.5rem)] max-h-[800px]">
+          <div className="bg-matte-900 border border-matte-800 rounded-3xl shadow-soft overflow-hidden flex flex-col h-[calc(100vh-6.5rem)] max-h-[800px]">
             <FilterSidebarContent />
           </div>
         </aside>
@@ -423,12 +423,12 @@ export const Browse: React.FC<BrowseProps> = ({ onSelectTool }) => {
               ))}
             </div>
           ) : (
-            <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center max-w-lg mx-auto my-8 space-y-4 shadow-soft">
-              <div className="w-16 h-16 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center mx-auto">
-                <Wrench className="w-8 h-8 text-brand-600" />
+            <div className="bg-matte-900 rounded-3xl border border-matte-800 p-12 text-center max-w-lg mx-auto my-8 space-y-4 shadow-soft">
+              <div className="w-16 h-16 rounded-full bg-matte-800 text-slate-400 flex items-center justify-center mx-auto">
+                <Wrench className="w-8 h-8 text-brand-500" />
               </div>
-              <h3 className="text-xl font-bold text-navy-900">No equipment matches your criteria</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <h3 className="text-xl font-bold text-white">No equipment matches your criteria</h3>
+              <p className="text-sm text-slate-400 leading-relaxed">
                 We couldn't find any listings matching your current filter selection under ₹{filterState.maxPrice}/day. Try adjusting the sidebar filters on the left.
               </p>
               <button

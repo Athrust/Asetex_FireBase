@@ -67,15 +67,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10 animate-in fade-in duration-300">
       {/* Welcome & Two Clear CTAs Header */}
-      <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-soft border border-slate-200 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-matte-900 rounded-3xl p-8 sm:p-10 shadow-soft border border-matte-800 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-2xl z-10">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-matte-800 border border-matte-700 text-slate-300 text-xs font-bold uppercase tracking-wider">
             Unified Renter & Lender Hub
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-slate-900">
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-white">
             Welcome back, {user.name.split(' ')[0]}!
           </h1>
-          <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
             Manage your equipment rentals and review incoming requests for the tools you own—all in one place.
           </p>
         </div>
@@ -84,16 +84,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-3.5 w-full md:w-auto z-10">
           <button
             onClick={() => onNavigate('add-tool')}
-            className="btn-primary py-3.5 px-6 bg-slate-800 hover:bg-slate-900 text-white font-bold gap-2 text-sm shadow-sm border border-slate-700 w-full sm:w-auto whitespace-nowrap"
+            className="btn-primary py-3.5 px-6 bg-slate-800 hover:bg-slate-700 text-white font-bold gap-2 text-sm shadow-sm border border-slate-600 w-full sm:w-auto whitespace-nowrap"
           >
             <PlusCircle className="w-5 h-5" />
             <span>+ List Equipment</span>
           </button>
           <button
             onClick={() => onNavigate('browse')}
-            className="btn-secondary py-3.5 px-6 bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 gap-2 text-sm font-bold w-full sm:w-auto whitespace-nowrap"
+            className="btn-secondary py-3.5 px-6 bg-matte-800 hover:bg-matte-700 text-slate-200 border border-matte-700 gap-2 text-sm font-bold w-full sm:w-auto whitespace-nowrap"
           >
-            <Search className="w-4 h-4 text-blue-600" />
+            <Search className="w-4 h-4 text-brand-500" />
             Browse Tools
           </button>
         </div>
@@ -128,64 +128,64 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <div 
           onClick={() => onNavigate('my-bookings')}
-          className="bg-white p-6 rounded-3xl border border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
+          className="bg-matte-900 p-6 rounded-3xl border border-matte-800 shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">My Rentals</span>
-            <div className="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-brand-950/30 text-brand-500 flex items-center justify-center group-hover:bg-brand-500 group-hover:text-white transition-colors">
               <Calendar className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-navy-900">{myRentals.length}</p>
-          <p className="text-xs font-semibold text-brand-600 flex items-center gap-1">
+          <p className="text-3xl font-extrabold text-white">{myRentals.length}</p>
+          <p className="text-xs font-semibold text-brand-500 flex items-center gap-1">
             {myRentals.filter(r => r.status === 'Approved').length} approved, {myRentals.filter(r => r.status === 'Pending').length} pending
           </p>
         </div>
 
         <div 
           onClick={() => onNavigate('booking-requests')}
-          className="bg-white p-6 rounded-3xl border border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
+          className="bg-matte-900 p-6 rounded-3xl border border-matte-800 shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Incoming Requests</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-amber-950/30 text-amber-500 flex items-center justify-center group-hover:bg-amber-500 group-hover:text-white transition-colors">
               <ListOrdered className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-navy-900">{incomingRequests.length}</p>
-          <p className="text-xs font-semibold text-amber-600">
+          <p className="text-3xl font-extrabold text-white">{incomingRequests.length}</p>
+          <p className="text-xs font-semibold text-amber-500">
             {pendingIncoming.length} awaiting your approval
           </p>
         </div>
 
         <div 
           onClick={() => onNavigate('my-listings')}
-          className="bg-white p-6 rounded-3xl border border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
+          className="bg-matte-900 p-6 rounded-3xl border border-matte-800 shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">My Tool Listings</span>
-            <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-blue-950/30 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
               <Wrench className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-navy-900">{myListings.length}</p>
-          <p className="text-xs font-semibold text-blue-600">
+          <p className="text-3xl font-extrabold text-white">{myListings.length}</p>
+          <p className="text-xs font-semibold text-blue-500">
             {myListings.filter(l => l.status === 'active').length} active and earnable
           </p>
         </div>
 
         <div 
           onClick={() => onNavigate('booking-requests')}
-          className="bg-white p-6 rounded-3xl border border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
+          className="bg-matte-900 p-6 rounded-3xl border border-matte-800 shadow-md hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:border-slate-400 card-hover cursor-pointer space-y-2 group transition-all"
         >
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Estimated Value</span>
-            <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+            <div className="w-9 h-9 rounded-xl bg-emerald-950/30 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
               <IndianRupee className="w-5 h-5" />
             </div>
           </div>
-          <p className="text-3xl font-extrabold text-navy-900">₹{totalEarningsEstimate}</p>
-          <p className="text-xs font-semibold text-emerald-600">
+          <p className="text-3xl font-extrabold text-white">₹{totalEarningsEstimate}</p>
+          <p className="text-xs font-semibold text-emerald-500">
             Total bookings potential
           </p>
         </div>
@@ -194,17 +194,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
       {/* Main Split Content: Incoming Requests vs My Bookings */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: Incoming Booking Requests (Lending Side) */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-300 shadow-md space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="lg:col-span-7 bg-matte-900 rounded-3xl p-6 sm:p-8 border border-matte-800 shadow-md space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-matte-800">
             <div>
-              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">Lending Activity</span>
-              <h2 className="text-xl font-extrabold text-navy-900 flex items-center gap-2">
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-wider">Lending Activity</span>
+              <h2 className="text-xl font-extrabold text-white flex items-center gap-2">
                 Incoming Booking Requests ({incomingRequests.length})
               </h2>
             </div>
             <button
               onClick={() => onNavigate('booking-requests')}
-              className="text-xs font-bold text-brand-600 hover:text-brand-700 inline-flex items-center gap-1"
+              className="text-xs font-bold text-brand-500 hover:text-brand-400 inline-flex items-center gap-1"
             >
               Manage All →
             </button>
@@ -217,27 +217,27 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
                   key={req.id}
                   className={`p-5 rounded-2xl border transition-all ${
                     req.status === 'Pending' 
-                      ? 'bg-amber-50/50 border-amber-300 shadow-md hover:shadow-lg' 
-                      : 'bg-white border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400'
+                      ? 'bg-amber-950/20 border-amber-900/50 shadow-md hover:shadow-lg' 
+                      : 'bg-matte-800 border-matte-700 shadow-md hover:shadow-lg hover:border-matte-600'
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-start gap-3.5">
-                      <img src={req.toolImage} alt={req.toolTitle} className="w-14 h-14 rounded-xl object-cover shrink-0 border border-slate-200" />
+                      <img src={req.toolImage} alt={req.toolTitle} className="w-14 h-14 rounded-xl object-cover shrink-0 border border-matte-700" />
                       <div>
-                        <span className="text-[11px] font-bold text-brand-600 flex items-center gap-1">
+                        <span className="text-[11px] font-bold text-brand-500 flex items-center gap-1">
                           {req.toolCategory}
                         </span>
-                        <h4 className="font-bold text-navy-900 text-sm line-clamp-1">{req.toolTitle}</h4>
-                        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-600 mt-1">
-                          <span className="font-semibold text-navy-800 flex items-center gap-1">
+                        <h4 className="font-bold text-slate-100 text-sm line-clamp-1">{req.toolTitle}</h4>
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
+                          <span className="font-semibold text-slate-300 flex items-center gap-1">
                             <img src={req.renterAvatar} alt="" className="w-4 h-4 rounded-full" />
                             {req.renterName}
                           </span>
                           <span>•</span>
                           <span>{req.startDate} → {req.endDate} ({req.days}d)</span>
                           <span>•</span>
-                          <span className="font-extrabold text-emerald-600">₹{req.totalEstimate}</span>
+                          <span className="font-extrabold text-emerald-500">₹{req.totalEstimate}</span>
                         </div>
                       </div>
                     </div>
@@ -274,7 +274,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
                   </div>
 
                   {req.message && (
-                    <p className="text-xs text-slate-600 italic bg-white/80 p-3 rounded-xl border border-slate-200/60 mt-3 pl-4">
+                    <p className="text-xs text-slate-300 italic bg-matte-900/80 p-3 rounded-xl border border-matte-800 mt-3 pl-4">
                       "{req.message}"
                     </p>
                   )}
@@ -282,10 +282,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
               ))}
             </div>
           ) : (
-            <div className="text-center py-10 text-slate-500 text-sm space-y-3">
-              <Wrench className="w-10 h-10 mx-auto text-slate-300" />
+            <div className="text-center py-10 text-slate-400 text-sm space-y-3">
+              <Wrench className="w-10 h-10 mx-auto text-slate-600" />
               <p>You have no incoming booking requests yet.</p>
-              <button onClick={() => onNavigate('add-tool')} className="btn-secondary text-xs">
+              <button onClick={() => onNavigate('add-tool')} className="btn-secondary text-xs bg-matte-800 border-matte-700 text-slate-200">
                 + List another tool to increase earnings
               </button>
             </div>
@@ -293,17 +293,17 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
         </div>
 
         {/* Right Column: My Active & Pending Bookings (Rented by Me) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-6 sm:p-8 border border-slate-300 shadow-md space-y-6">
-          <div className="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div className="lg:col-span-5 bg-matte-900 rounded-3xl p-6 sm:p-8 border border-matte-800 shadow-md space-y-6">
+          <div className="flex items-center justify-between pb-4 border-b border-matte-800">
             <div>
-              <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">Renting Activity</span>
-              <h2 className="text-xl font-extrabold text-navy-900 flex items-center gap-2">
+              <span className="text-xs font-bold text-brand-500 uppercase tracking-wider">Renting Activity</span>
+              <h2 className="text-xl font-extrabold text-white flex items-center gap-2">
                 My Bookings ({myRentals.length})
               </h2>
             </div>
             <button
               onClick={() => onNavigate('my-bookings')}
-              className="text-xs font-bold text-brand-600 hover:text-brand-700 inline-flex items-center gap-1"
+              className="text-xs font-bold text-brand-500 hover:text-brand-400 inline-flex items-center gap-1"
             >
               View All →
             </button>
@@ -315,45 +315,45 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate, onSelectTool }
                 <div 
                   key={book.id}
                   onClick={() => onSelectTool(book.toolId)}
-                  className="p-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-300 shadow-md hover:shadow-lg hover:border-slate-400 cursor-pointer transition-all space-y-2.5 group"
+                  className="p-4 rounded-2xl bg-matte-800 hover:bg-matte-700 border border-matte-700 shadow-md hover:shadow-lg hover:border-matte-600 cursor-pointer transition-all space-y-2.5 group"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-start gap-3">
-                      <img src={book.toolImage} alt={book.toolTitle} className="w-12 h-12 rounded-xl object-cover shrink-0 border border-slate-300 shadow-sm" />
+                      <img src={book.toolImage} alt={book.toolTitle} className="w-12 h-12 rounded-xl object-cover shrink-0 border border-matte-700 shadow-sm" />
                       <div>
-                        <h4 className="font-bold text-navy-900 text-xs sm:text-sm line-clamp-1 group-hover:text-brand-600 transition-colors">
+                        <h4 className="font-bold text-slate-100 text-xs sm:text-sm line-clamp-1 group-hover:text-brand-400 transition-colors">
                           {book.toolTitle}
                         </h4>
-                        <p className="text-[11px] text-slate-500 mt-0.5">
-                          Owner: <strong className="text-navy-800">{book.ownerName}</strong>
+                        <p className="text-[11px] text-slate-400 mt-0.5">
+                          Owner: <strong className="text-slate-300">{book.ownerName}</strong>
                         </p>
                       </div>
                     </div>
 
                     <span className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider shrink-0 ${
                       book.status === 'Approved'
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                        ? 'bg-emerald-950/30 text-emerald-500 border border-emerald-900/50'
                         : book.status === 'Pending'
-                        ? 'bg-amber-100 text-amber-800 border border-amber-200'
-                        : 'bg-rose-100 text-rose-800 border border-rose-200'
+                        ? 'bg-amber-950/30 text-amber-500 border border-amber-900/50'
+                        : 'bg-rose-950/30 text-rose-500 border border-rose-900/50'
                     }`}>
                       {book.status}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200/60 text-slate-600">
+                  <div className="flex items-center justify-between text-xs pt-2 border-t border-matte-700 text-slate-400">
                     <span className="flex items-center gap-1 font-medium">
-                      <Calendar className="w-3.5 h-3.5 text-brand-600" />
+                      <Calendar className="w-3.5 h-3.5 text-brand-500" />
                       {book.startDate} ({book.days}d)
                     </span>
-                    <span className="font-extrabold text-navy-900">₹{book.totalEstimate}</span>
+                    <span className="font-extrabold text-white">₹{book.totalEstimate}</span>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center py-10 text-slate-500 text-sm space-y-3">
-              <Calendar className="w-10 h-10 mx-auto text-slate-300" />
+            <div className="text-center py-10 text-slate-400 text-sm space-y-3">
+              <Calendar className="w-10 h-10 mx-auto text-slate-600" />
               <p>You haven't requested any tools yet.</p>
               <button onClick={() => onNavigate('browse')} className="btn-primary text-xs">
                 Browse Tools Nearby

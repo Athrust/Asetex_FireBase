@@ -125,7 +125,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage, setSe
           {/* Search Input Box */}
           <input
             type="text"
-            placeholder="Search tools, 3D printers, saws, cameras..."
+
             value={navQuery}
             onChange={(e) => setNavQuery(e.target.value)}
             className="flex-1 px-4 py-3 bg-white text-sm font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"
@@ -494,7 +494,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage, setActivePage, setSe
         <form onSubmit={handleNavSearchSubmit} className="w-full max-w-3xl mx-auto flex items-center shadow-sm rounded-xl overflow-hidden border border-slate-300 bg-white">
           <input
             type="text"
-            placeholder="Search equipment, cameras, drills, power tools..."
+
             value={navQuery}
             onChange={(e) => setNavQuery(e.target.value)}
             className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-900 placeholder-slate-400 focus:outline-none"

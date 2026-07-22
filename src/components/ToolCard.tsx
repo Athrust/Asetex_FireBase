@@ -15,10 +15,10 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, onSelect }) => {
   return (
     <div 
       onClick={() => onSelect(tool.id)}
-      className="card-hover group cursor-pointer overflow-hidden flex flex-col h-full bg-white border border-slate-200/80 rounded-2xl transition-all duration-300 hover:border-brand-300 hover:shadow-elevated"
+      className="card-hover group cursor-pointer overflow-hidden flex flex-col h-full bg-matte-900 border border-matte-800 rounded-2xl transition-all duration-300 hover:border-slate-300 hover:shadow-[0_0_20px_rgba(255,255,255,0.15)]"
     >
       {/* Image Container - Increased image size to 1:1 aspect square */}
-      <div className="relative aspect-square w-full overflow-hidden bg-slate-50/60 border-b border-slate-100/80">
+      <div className="relative aspect-square w-full overflow-hidden bg-matte-800/60 border-b border-matte-800/80">
         <img 
           src={tool.image} 
           alt={tool.title} 
@@ -29,7 +29,7 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, onSelect }) => {
           }}
         />
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 backdrop-blur-md text-navy-800 shadow-sm flex items-center gap-1.5 border border-slate-100">
+          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-matte-900/95 backdrop-blur-md text-slate-200 shadow-sm flex items-center gap-1.5 border border-matte-800">
             {tool.category.split('&')[0].trim()}
           </span>
         </div>
@@ -48,30 +48,29 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, onSelect }) => {
         </div>
       </div>
 
-      {/* Content Container */}
       <div className="p-5 flex-1 flex flex-col justify-between gap-4">
         <div>
-          <div className="flex items-center justify-between gap-2 text-xs text-slate-500 mb-2">
+          <div className="flex items-center justify-between gap-2 text-xs text-slate-400 mb-2">
             <span className="font-medium truncate">
               {tool.location.split('—')[1] || tool.location}
             </span>
-            <span className="flex items-center gap-1 font-bold text-navy-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200/50">
+            <span className="flex items-center gap-1 font-bold text-amber-500 bg-amber-950/30 px-2 py-0.5 rounded-md border border-amber-900/50">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-              {tool.rating} <span className="text-slate-400 font-normal">({tool.reviewCount})</span>
+              {tool.rating} <span className="text-amber-500/70 font-normal">({tool.reviewCount})</span>
             </span>
           </div>
 
-          <h3 className="font-bold text-navy-900 text-base leading-snug line-clamp-2 group-hover:text-brand-600 transition-colors">
+          <h3 className="font-bold text-slate-200 text-base leading-snug line-clamp-2 group-hover:text-brand-500 transition-colors">
             {tool.title}
           </h3>
 
-          <p className="text-xs text-slate-600 mt-2 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">
             {tool.shortDescription}
           </p>
         </div>
 
         {/* Owner Card Footer */}
-        <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <div className="pt-3 border-t border-matte-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <img 
               src={tool.owner?.avatar || '/images/default-avatar.png'} 
@@ -79,13 +78,13 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, onSelect }) => {
               className="w-7 h-7 rounded-full object-cover ring-2 ring-brand-500/20"
             />
             <div>
-              <p className="text-xs font-bold text-navy-800 flex items-center gap-1">
+              <p className="text-xs font-bold text-slate-300 flex items-center gap-1">
                 {tool.owner?.name || 'Assetex Member'}
                 {tool.owner?.verified && (
-                  <span className="text-[10px] bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded font-bold">Verified</span>
+                  <span className="text-[10px] bg-emerald-950/50 text-emerald-500 px-1.5 py-0.5 rounded font-bold">Verified</span>
                 )}
               </p>
-              <p className="text-[10px] text-slate-400 font-medium">
+              <p className="text-[10px] text-slate-500 font-medium">
                 {tool.owner?.responseTime || 'Responds fast'}
               </p>
             </div>

@@ -6,7 +6,13 @@
 
 @layer base {
   body {
-    @apply bg-white text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen;
+    @apply bg-matte-950 text-slate-200 font-sans antialiased selection:bg-brand-600 selection:text-white min-h-screen overflow-x-hidden;
+    cursor: url('/cursor.png') 0 0, auto;
+  }
+
+  /* Apply to all interactive elements to prevent it reverting to default */
+  a, button, input, select, textarea, [role="button"], [role="tab"], .cursor-pointer, .hover\:cursor-pointer:hover {
+    cursor: url('/cursor.png') 0 0, pointer !important;
   }
 }
 
@@ -23,19 +29,19 @@
 
 @layer utilities {
   .glass-header {
-    @apply bg-[#7575a3] backdrop-blur-md border-b-2 border-b-[#5e5e8a] sticky top-0 z-50 transition-all duration-200 shadow-[0_8px_24px_-4px_rgba(15,23,42,0.2)];
+    @apply bg-matte-975/80 backdrop-blur-md border-b border-b-matte-800 sticky top-0 z-50 transition-all duration-200 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.5)];
   }
   
   .card-hover {
-    @apply shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-elevated bg-white border border-slate-200 border-b-2 border-b-slate-300/80 rounded-2xl;
+    @apply shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:shadow-elevated bg-matte-900 border border-matte-800 border-b-2 border-b-matte-700/80 rounded-2xl;
   }
   
   .btn-primary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-800 text-white font-bold hover:bg-slate-900 active:translate-y-0.5 transition-all shadow-[0_4px_12px_rgba(15,23,42,0.22),0_1px_2px_rgba(15,23,42,0.12)] hover:shadow-[0_6px_16px_rgba(15,23,42,0.28)] border border-slate-700 disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-brand-500 text-white font-bold hover:bg-brand-600 active:translate-y-0.5 transition-all shadow-[0_4px_12px_rgba(245,158,11,0.22),0_1px_2px_rgba(0,0,0,0.2)] hover:shadow-[0_6px_16px_rgba(245,158,11,0.35)] border border-brand-600 disabled:opacity-50 disabled:pointer-events-none;
   }
   
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 font-bold hover:bg-slate-200 active:translate-y-0.5 transition-all shadow-[0_2px_8px_rgba(15,23,42,0.08),0_1px_2px_rgba(15,23,42,0.04)] hover:shadow-[0_4px_12px_rgba(15,23,42,0.12)] disabled:opacity-50 disabled:pointer-events-none;
+    @apply inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-slate-200 font-bold hover:bg-matte-700 active:translate-y-0.5 transition-all shadow-[0_2px_8px_rgba(0,0,0,0.3),0_1px_2px_rgba(0,0,0,0.2)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.4)] disabled:opacity-50 disabled:pointer-events-none;
   }
 }
 
