@@ -251,7 +251,6 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
           >
             + Add Your First Tool Listing
           </button>
-          </button>
         </div>
       )}
 
