@@ -61,42 +61,77 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
   const [specs, setSpecs] = useState<string[]>(['All original safety guards included', 'Inspected and cleaned prior to rental']);
   const [newSpecInput, setNewSpecInput] = useState('');
 
+  // Helper function to compress large photos from phones before uploading
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          
+          // Max dimensions
+          const MAX_SIZE = 800;
+          if (width > height) {
+            if (width > MAX_SIZE) {
+              height *= MAX_SIZE / width;
+              width = MAX_SIZE;
+            }
+          } else {
+            if (height > MAX_SIZE) {
+              width *= MAX_SIZE / height;
+              height = MAX_SIZE;
+            }
+          }
+          
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx?.drawImage(img, 0, 0, width, height);
+          
+          // Output compressed JPEG
+          resolve(canvas.toDataURL('image/jpeg', 0.7));
+        };
+        img.onerror = (error) => reject(error);
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const filesArray = Array.from(e.target.files);
       for (const file of filesArray) {
         if (!file.type.startsWith('image/')) continue;
-        const reader = new FileReader();
-        reader.onload = async (uploadEvent) => {
-          if (uploadEvent.target?.result) {
-            const base64Data = uploadEvent.target!.result as string;
-            try {
-              const res = await fetch(`${API_URL}/upload`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  filename: file.name,
-                  dataUrl: base64Data
-                })
-              });
-              if (res.ok) {
-                const data = await res.json();
-                setImages(prev => {
-                  if (prev.length >= 12) return prev;
-                  return [...prev, data.url];
-                });
-                return;
-              }
-            } catch (err) {
-              console.warn('Backend image upload failed, falling back to data URL:', err);
-            }
+        
+        try {
+          // Compress the image before uploading to avoid memory limits
+          const base64Data = await compressImage(file);
+          
+          const res = await fetch(`${API_URL}/upload`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              filename: file.name,
+              dataUrl: base64Data
+            })
+          });
+          
+          if (res.ok) {
+            const data = await res.json();
             setImages(prev => {
               if (prev.length >= 12) return prev;
-              return [...prev, base64Data];
+              return [...prev, data.url];
             });
+            continue;
           }
-        };
-        reader.readAsDataURL(file);
+        } catch (err) {
+          console.warn('Image processing or upload failed:', err);
+        }
       }
       setShowPhotoPopup(false);
     }
