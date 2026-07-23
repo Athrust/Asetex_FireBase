@@ -585,10 +585,9 @@ export const ToolDetail: React.FC<ToolDetailProps> = ({ toolId, onNavigate }) =>
                         onChange={(e) => setHours(Number(e.target.value))}
                         className="w-full px-3 py-2.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-semibold text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none"
                       >
-                        <option value={2}>2 Hours</option>
-                        <option value={4}>4 Hours</option>
-                        <option value={8}>8 Hours</option>
-                        <option value={12}>12 Hours</option>
+                        {[2, 4, 6, 8].map((h) => (
+                          <option key={h} value={h}>{h} Hours</option>
+                        ))}
                       </select>
                     </div>
                   </div>

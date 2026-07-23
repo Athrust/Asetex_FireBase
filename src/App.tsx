@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Loader2, AlertCircle } from 'lucide-react';
+import { Loader2, AlertCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { AppProvider, useApp } from './context/AppContext';
 import { Navbar } from './components/Navbar';
 import { Home } from './pages/Home';
@@ -21,18 +21,24 @@ import { Background3D } from './components/Background3D';
 const MainContent: React.FC = () => {
   const { user, isLoading, error, retryConnection } = useApp();
 
-  // Restore page state from localStorage on mount
+  // Restore page state from URL or localStorage on mount
   const [activePage, setActivePage] = useState<string>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const pageParam = params.get('page');
+    if (pageParam) return pageParam;
     const saved = localStorage.getItem('assetex_active_page');
     return saved || 'home';
   });
   const [selectedToolId, setSelectedToolId] = useState<string | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    const toolParam = params.get('tool');
+    if (toolParam) return toolParam;
     return localStorage.getItem('assetex_selected_tool') || null;
   });
   // When a user is not logged in and clicks a tool, we remember it so we can redirect after login
   const [pendingToolId, setPendingToolId] = useState<string | null>(null);
 
-  // Persist navigation state to localStorage
+  // Persist navigation state to localStorage and update Browser History URL
   useEffect(() => {
     localStorage.setItem('assetex_active_page', activePage);
     if (selectedToolId) {
@@ -40,7 +46,33 @@ const MainContent: React.FC = () => {
     } else {
       localStorage.removeItem('assetex_selected_tool');
     }
+    
+    // Sync with browser URL
+    const params = new URLSearchParams(window.location.search);
+    const currentPage = params.get('page');
+    const currentTool = params.get('tool');
+    
+    if (currentPage !== activePage || (currentTool || null) !== (selectedToolId || null)) {
+      const newUrl = selectedToolId ? `?page=${activePage}&tool=${selectedToolId}` : `?page=${activePage}`;
+      window.history.pushState({ page: activePage, tool: selectedToolId }, '', newUrl);
+    }
   }, [activePage, selectedToolId]);
+
+  // Listen for browser Back/Forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const pageParam = params.get('page');
+      const toolParam = params.get('tool');
+      
+      if (pageParam) setActivePage(pageParam);
+      if (toolParam) setSelectedToolId(toolParam);
+      else setSelectedToolId(null);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Scroll to top when page changes
   useEffect(() => {
@@ -180,6 +212,30 @@ const MainContent: React.FC = () => {
               <li><button onClick={() => handleNavigate('add-tool')} className="hover:text-brand-300 transition-colors">List Your Tools</button></li>
               <li><button onClick={() => handleNavigate('how-it-works')} className="hover:text-brand-300 transition-colors">Insurance & Damage Protection</button></li>
               <li><button onClick={() => handleNavigate('how-it-works')} className="hover:text-brand-300 transition-colors">Service Fee Transparency</button></li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">Contact Details</h4>
+            <ul className="space-y-3 text-xs text-slate-400">
+              <li className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-brand-500 shrink-0" />
+                <a href="mailto:atharvamule8055@gmail.com" className="hover:text-brand-300 transition-colors truncate">atharvamule8055@gmail.com</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-brand-500 shrink-0" />
+                <a href="tel:+918080828469" className="hover:text-brand-300 transition-colors">+91 80808 28469</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 text-brand-500 shrink-0 fill-current">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <a href="https://www.linkedin.com/in/atharv-mule/" target="_blank" rel="noopener noreferrer" className="hover:text-brand-300 transition-colors truncate">atharv-mule</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-brand-500 shrink-0" />
+                <span className="truncate">IIIT Nagpur</span>
+              </li>
             </ul>
           </div>
 

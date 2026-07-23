@@ -78,14 +78,11 @@ export const ToolCard: React.FC<ToolCardProps> = ({ tool, onSelect }) => {
               className="w-7 h-7 rounded-full object-cover ring-2 ring-brand-500/20"
             />
             <div>
-              <p className="text-xs font-bold text-slate-300 flex items-center gap-1">
+              <p className="text-[0.85rem] font-bold text-slate-300 flex items-center gap-1">
                 {tool.owner?.name || 'Assetex Member'}
                 {tool.owner?.verified && (
                   <span className="text-[10px] bg-emerald-950/50 text-emerald-500 px-1.5 py-0.5 rounded font-bold">Verified</span>
                 )}
-              </p>
-              <p className="text-[10px] text-slate-500 font-medium">
-                {tool.owner?.responseTime || 'Responds fast'}
               </p>
             </div>
           </div>

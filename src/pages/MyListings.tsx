@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { getCategoryIcon } from '../components/ToolCard';
+import type { ToolCategory } from '../types';
+
+const categories: ToolCategory[] = [
+  '3D Printing & Fabrication',
+  'Power Tools & Carpentry',
+  'Gardening & Outdoor',
+  'Home Improvement',
+  'Photography & Video',
+  'Other'
+];
+
 import { 
   Plus,
   Wrench, 
@@ -29,6 +40,10 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
   const [editDeposit, setEditDeposit] = useState<string>('');
   const [isUpdatingPricing, setIsUpdatingPricing] = useState(false);
 
+  const [editingCategoryId, setEditingCategoryId] = useState<string | null>(null);
+  const [editCategory, setEditCategory] = useState<ToolCategory>('Other');
+  const [isUpdatingCategory, setIsUpdatingCategory] = useState(false);
+
   const openPricingModal = (tool: any) => {
     setEditingPricingId(tool.id);
     setEditDailyRate(tool.dailyRate.toString());
@@ -50,6 +65,26 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
       console.error('Failed to update pricing', err);
     } finally {
       setIsUpdatingPricing(false);
+    }
+  };
+
+  const openCategoryModal = (tool: any) => {
+    setEditingCategoryId(tool.id);
+    setEditCategory(tool.category);
+  };
+
+  const handleCategorySubmit = async () => {
+    if (!editingCategoryId || !editCategory) return;
+    setIsUpdatingCategory(true);
+    try {
+      await updateListing(editingCategoryId, {
+        category: editCategory
+      });
+      setEditingCategoryId(null);
+    } catch (err) {
+      console.error('Failed to update category', err);
+    } finally {
+      setIsUpdatingCategory(false);
     }
   };
 
@@ -212,24 +247,35 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
                   </button>
 
                   <button
-                    onClick={() => onSelectTool(tool.id)}
-                    className="p-2 rounded-xl bg-matte-900 border border-matte-700 text-slate-300 hover:bg-matte-800 hover:text-white transition-colors"
-                    title="View detail page"
+                    onClick={() => openCategoryModal(tool)}
+                    className="p-2 rounded-xl bg-matte-900 border border-matte-700 text-slate-300 hover:bg-matte-800 hover:text-white text-xs font-semibold flex items-center gap-1 transition-colors"
+                    title="Edit Category"
                   >
-                    <Eye className="w-3.5 h-3.5" />
+                    <Edit3 className="w-3.5 h-3.5" />
+                    Edit Category
                   </button>
 
-                  <button
-                    onClick={async () => {
-                      if (window.confirm(`Are you sure you want to delete "${tool.title}"?`)) {
-                        await deleteListing(tool.id);
-                      }
-                    }}
-                    className="p-2 rounded-xl bg-rose-950/40 border border-rose-900/50 text-rose-500 hover:bg-rose-950 transition-colors"
-                    title="Delete listing"
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
+                  <div className="flex flex-col gap-2">
+                    <button
+                      onClick={() => onSelectTool(tool.id)}
+                      className="p-2 rounded-xl bg-matte-900 border border-matte-700 text-slate-300 hover:bg-matte-800 hover:text-white transition-colors"
+                      title="View detail page"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                    </button>
+
+                    <button
+                      onClick={async () => {
+                        if (window.confirm(`Are you sure you want to delete "${tool.title}"?`)) {
+                          await deleteListing(tool.id);
+                        }
+                      }}
+                      className="p-2 rounded-xl bg-rose-950/40 border border-rose-900/50 text-rose-500 hover:bg-rose-950 transition-colors"
+                      title="Delete listing"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -312,6 +358,50 @@ export const MyListings: React.FC<MyListingsProps> = ({ onNavigate, onSelectTool
                   className="btn-primary w-full py-3.5"
                 >
                   {isUpdatingPricing ? 'Saving...' : 'Save Pricing Changes'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Category Modal */}
+      {editingCategoryId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-matte-900 rounded-3xl w-full max-w-md shadow-2xl overflow-hidden border border-matte-800">
+            <div className="flex items-center justify-between p-6 border-b border-matte-800">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <Edit3 className="w-5 h-5 text-brand-500" />
+                Edit Category
+              </h3>
+              <button 
+                onClick={() => setEditingCategoryId(null)}
+                className="w-8 h-8 flex items-center justify-center rounded-full bg-matte-800 text-slate-400 hover:bg-matte-700 hover:text-white transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="p-6 space-y-5">
+              <div className="space-y-1.5">
+                <label className="text-sm font-bold text-slate-300 block">Category *</label>
+                <select 
+                  value={editCategory}
+                  onChange={(e) => setEditCategory(e.target.value as ToolCategory)}
+                  className="w-full px-4 py-3.5 rounded-xl bg-matte-800 border border-matte-700 text-sm font-medium text-white focus:bg-matte-900 focus:border-brand-500 focus:outline-none cursor-pointer"
+                >
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="pt-2">
+                <button 
+                  onClick={handleCategorySubmit}
+                  disabled={isUpdatingCategory}
+                  className="btn-primary w-full py-3.5"
+                >
+                  {isUpdatingCategory ? 'Saving...' : 'Save Category Changes'}
                 </button>
               </div>
             </div>

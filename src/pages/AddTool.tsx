@@ -41,7 +41,7 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
   const { user, addListing } = useApp();
 
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState<ToolCategory>('Power Tools & Carpentry');
+  const [category, setCategory] = useState<ToolCategory>('3D Printing & Fabrication');
   const [shortDescription, setShortDescription] = useState('');
   const [description, setDescription] = useState('');
   const [dailyRate, setDailyRate] = useState<number>(2800);
@@ -54,6 +54,7 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
   const [error, setError] = useState('');
   const [showPhotoPopup, setShowPhotoPopup] = useState(false);
   const [customPhotoUrl, setCustomPhotoUrl] = useState('');
+  const [isDragging, setIsDragging] = useState(false);
   
   // Custom usage location rules option (Off-site vs On-site workspace usage)
   const [usageLocationType, setUsageLocationType] = useState<'off-site' | 'on-site' | 'both'>('both');
@@ -102,38 +103,60 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
     });
   };
 
+  const processFiles = async (files: FileList | File[]) => {
+    const filesArray = Array.from(files);
+    for (const file of filesArray) {
+      if (!file.type.startsWith('image/')) continue;
+      
+      try {
+        // Compress the image before uploading to avoid memory limits
+        const base64Data = await compressImage(file);
+        
+        const res = await fetch(`${API_URL}/upload`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            filename: file.name,
+            dataUrl: base64Data
+          })
+        });
+        
+        if (res.ok) {
+          const data = await res.json();
+          setImages(prev => {
+            if (prev.length >= 12) return prev;
+            return [...prev, data.url];
+          });
+          continue;
+        }
+      } catch (err) {
+        console.warn('Image processing or upload failed:', err);
+      }
+    }
+    setShowPhotoPopup(false);
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
-      for (const file of filesArray) {
-        if (!file.type.startsWith('image/')) continue;
-        
-        try {
-          // Compress the image before uploading to avoid memory limits
-          const base64Data = await compressImage(file);
-          
-          const res = await fetch(`${API_URL}/upload`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              filename: file.name,
-              dataUrl: base64Data
-            })
-          });
-          
-          if (res.ok) {
-            const data = await res.json();
-            setImages(prev => {
-              if (prev.length >= 12) return prev;
-              return [...prev, data.url];
-            });
-            continue;
-          }
-        } catch (err) {
-          console.warn('Image processing or upload failed:', err);
-        }
-      }
-      setShowPhotoPopup(false);
+      await processFiles(e.target.files);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      await processFiles(e.dataTransfer.files);
     }
   };
 
@@ -468,7 +491,12 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
 
           {/* Interactive Custom Photo Popup Modal */}
           {showPhotoPopup && (
-            <div className="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div 
+              className="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <div className="bg-matte-900 rounded-3xl p-6 max-w-md w-full border border-matte-800 shadow-elevated space-y-6 animate-in fade-in zoom-in-95 duration-150">
                 <div className="flex items-center justify-between pb-3 border-b border-matte-800">
                   <h3 className="text-base font-extrabold text-white">Add Equipment Photo</h3>
@@ -487,7 +515,13 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
                     <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
                       1. Upload Image File from Your Device
                     </label>
-                    <label className="border-2 border-dashed border-brand-500/50 bg-brand-950/20 hover:bg-brand-950/40 rounded-2xl p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-sm">
+                    <label 
+                      className={`border-2 border-dashed rounded-2xl p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all group shadow-sm ${
+                        isDragging 
+                          ? 'border-brand-400 bg-brand-900/40' 
+                          : 'border-brand-500/50 bg-brand-950/20 hover:bg-brand-950/40'
+                      }`}
+                    >
                       <input 
                         type="file" 
                         accept="image/*" 
@@ -496,57 +530,12 @@ export const AddTool: React.FC<AddToolProps> = ({ onNavigate, onSelectTool }) =>
                         className="hidden" 
                       />
                       <Upload className="w-8 h-8 text-brand-500 group-hover:scale-110 transition-transform mb-2" />
-                      <span className="text-xs font-extrabold text-white block">Click to browse local image files</span>
+                      <span className="text-xs font-extrabold text-white block">Drag and drop or click to browse local image files</span>
                       <span className="text-[10px] font-semibold text-slate-400 mt-0.5">Supports PNG, JPG, WEBP, GIF (Up to 12 photos)</span>
                     </label>
                   </div>
 
-                  <div className="relative flex py-1 items-center">
-                    <div className="flex-grow border-t border-matte-800"></div>
-                    <span className="flex-shrink mx-3 text-slate-500 text-[10px] font-black uppercase tracking-wider">Or Choose Template</span>
-                    <div className="flex-grow border-t border-matte-800"></div>
-                  </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                      2. Choose Preset Template Photo
-                    </label>
-                    <div className="grid grid-cols-3 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setImages([...images, '/images/11.png']);
-                          setShowPhotoPopup(false);
-                        }}
-                        className="p-2 rounded-xl border border-matte-700 hover:border-brand-500 bg-matte-800 text-[10px] font-bold text-slate-300 flex flex-col items-center gap-1.5 transition-all"
-                      >
-                        <img src="/images/11.png" className="w-10 h-10 object-cover rounded-lg shadow-sm" alt="Saw" />
-                        Power Tool
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setImages([...images, '/images/12.png']);
-                          setShowPhotoPopup(false);
-                        }}
-                        className="p-2 rounded-xl border border-matte-700 hover:border-brand-500 bg-matte-800 text-[10px] font-bold text-slate-300 flex flex-col items-center gap-1.5 transition-all"
-                      >
-                        <img src="/images/12.png" className="w-10 h-10 object-cover rounded-lg shadow-sm" alt="Printer" />
-                        3D Printer
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setImages([...images, '/images/13.png']);
-                          setShowPhotoPopup(false);
-                        }}
-                        className="p-2 rounded-xl border border-matte-700 hover:border-brand-500 bg-matte-800 text-[10px] font-bold text-slate-300 flex flex-col items-center gap-1.5 transition-all"
-                      >
-                        <img src="/images/13.png" className="w-10 h-10 object-cover rounded-lg shadow-sm" alt="Mower" />
-                        Lawn Mower
-                      </button>
-                    </div>
-                  </div>
 
                   <div className="relative flex py-1 items-center">
                     <div className="flex-grow border-t border-matte-800"></div>
